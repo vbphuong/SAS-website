@@ -16,8 +16,8 @@ export default function UnitCard({ unit, index }: { unit: Unit; index: number })
           <li key={i} className="unit-tip">{tip}</li>
         ))}
       </ul>
-      <Link href="/#book" className="unit-book-link">
-        📅 Book a session →
+      <Link href="https://docs.google.com/forms/d/e/1FAIpQLSdj7tAIRpOakIeZEFTqETQWEAN5w0_nU39I3jyXA2n4WajrVw/viewform" className="unit-book-link">
+         Book a session →
       </Link>
     </div>
   );

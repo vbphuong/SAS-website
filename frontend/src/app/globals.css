@@ -346,44 +346,93 @@ footer {
   .hero-banner { padding: 48px 24px; }
   .view-section { padding: 36px 24px 64px; }
   .nav-container { padding: 0 24px; }
-  .nav-link { padding: 0 12px; font-size: 0.8125rem; }
   .units-grid { grid-template-columns: 1fr; }
 }
 
+/* HAMBURGER — mobile only */
+.hamburger {
+  display: none;
+  flex-direction: column; justify-content: center; align-items: center;
+  gap: 5px;
+  width: 40px; height: 40px;
+  background: none; border: none; cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.hamburger:hover { background: var(--c-bg); }
+.hamburger span {
+  display: block;
+  width: 22px; height: 2px;
+  background: var(--c-black);
+  border-radius: 2px;
+  transition: background 0.15s;
+}
+
 @media (max-width: 640px) {
-  .top-nav { height: auto; border-top-width: 3px; }
-  .nav-container { flex-direction: column; align-items: stretch; padding: 0; height: auto; }
-  .brand-wrap { height: 48px; padding: 0 16px; gap: 10px; }
-  .brand-mark { width: 8px; height: 8px; }
+  .desktop-nav { display: none; }
+  .hamburger { display: flex; }
+  .top-nav { height: 60px; }
+  .nav-container { padding: 0 20px; height: 60px; flex-direction: row; }
+  .brand-wrap { gap: 10px; }
   .brand-title { font-size: 1rem; }
   .brand-logo { height: 22px; padding-left: 10px; }
-  .top-nav nav { border-top: 1px solid var(--c-border); }
-  .nav-links { gap: 0; height: 40px; }
-  .nav-links li { flex: 1; }
-  .nav-link {
-    display: flex; align-items: center; justify-content: center;
-    height: 40px; padding: 0 8px; font-size: 0.75rem;
-    border-bottom-width: 3px;
-  }
   .view-section { padding: 28px 16px 56px; }
   footer { padding: 32px 16px; }
 }
 
-@media (max-width: 640px) {
-  .top-nav { height: auto; }
-  .nav-container { flex-direction: column; align-items: stretch; padding: 0; }
-  .brand-wrap { height: 52px; padding: 0 16px; gap: 10px; }
-  .brand-mark { width: 10px; height: 10px; }
-  .brand-title { font-size: 1.0625rem; }
-  .brand-logo { height: 24px; padding-left: 10px; }
-  .top-nav nav { border-top: 1px solid var(--c-border); }
-  .nav-links { gap: 0; }
-  .nav-links li { flex: 1; }
-  .nav-link {
-    display: flex; align-items: center; justify-content: center;
-    height: 42px; padding: 0 8px; font-size: 0.75rem; border-radius: 0;
-  }
-  .nav-link.active::after { left: 0; right: 0; }
-  .view-section { padding: 28px 16px 56px; }
-  footer { padding: 32px 16px; }
+/* DRAWER */
+.drawer-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(17, 18, 23, 0.45);
+  backdrop-filter: blur(2px);
+  animation: fade-in 0.2s ease both;
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  z-index: 201;
+  width: 280px;
+  background: var(--c-surface);
+  border-left: 1px solid var(--c-border);
+  box-shadow: -8px 0 32px rgba(17,18,23,0.12);
+  display: flex; flex-direction: column;
+  padding: 24px 0;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.drawer--open { transform: translateX(0); }
+
+.drawer-close {
+  align-self: flex-end;
+  margin-right: 20px; margin-bottom: 24px;
+  width: 36px; height: 36px;
+  background: var(--c-bg); border: 1px solid var(--c-border);
+  border-radius: 50%; cursor: pointer;
+  font-size: 0.875rem; color: var(--c-text-secondary);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+.drawer-close:hover { background: var(--c-red-tint); color: var(--c-red); }
+
+.drawer-links { list-style: none; display: flex; flex-direction: column; }
+.drawer-link {
+  display: block;
+  padding: 14px 28px;
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 1rem;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--c-text-secondary);
+  border-left: 3px solid transparent;
+  transition: all 0.15s;
+}
+.drawer-link:hover { color: var(--c-black); background: var(--c-bg); }
+.drawer-link.active {
+  color: var(--c-red);
+  border-left-color: var(--c-red);
+  background: var(--c-red-tint);
 }
