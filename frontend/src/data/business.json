@@ -1,0 +1,59 @@
+{
+  "faculty": "Business",
+  "units": [
+    {
+      "code": "ACC10007",
+      "name": "Accounting for Decision Making",
+      "tips": [
+        "Always link financial data back to real-world business decisions.",
+        "Practice past exam questions on balance sheets and income statements.",
+        "Understand the difference between cash flow and profit."
+      ]
+    },
+    {
+      "code": "MGT10001",
+      "name": "Management and Organisations",
+      "tips": [
+        "Apply management theories to real case studies for deeper understanding.",
+        "Learn how to structure an argumentative essay clearly.",
+        "Attend all workshops — discussion is where the concepts click."
+      ]
+    },
+    {
+      "code": "MKT10007",
+      "name": "Marketing Principles",
+      "tips": [
+        "Memorise and apply the 7 Ps framework to analyse any business.",
+        "Keep up with current marketing campaigns to use as examples.",
+        "Practice writing a marketing plan with a real or fictional product."
+      ]
+    },
+    {
+      "code": "ECO10001",
+      "name": "Business Economics",
+      "tips": [
+        "Draw supply-and-demand graphs by hand until they become intuitive.",
+        "Connect economic concepts to current news events.",
+        "Do practice calculations for elasticity and market equilibrium."
+      ]
+    },
+    {
+      "code": "BUS30022",
+      "name": "Strategic Management",
+      "tips": [
+        "Use SWOT and PESTLE frameworks confidently in your analysis.",
+        "Read real business case studies from HBR or Ivey.",
+        "In group work, assign roles early and create a shared timeline."
+      ]
+    },
+    {
+      "code": "FIN30006",
+      "name": "Financial Management",
+      "tips": [
+        "Practise NPV, IRR, and payback period calculations until they are automatic.",
+        "Understand the time value of money as the foundation of the unit.",
+        "Review past exams to find the most commonly tested calculations."
+      ]
+    }
+  ]
+}

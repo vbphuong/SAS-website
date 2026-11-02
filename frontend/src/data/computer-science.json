@@ -1,0 +1,59 @@
+{
+  "faculty": "Computer Science",
+  "units": [
+    {
+      "code": "COS10009",
+      "name": "Introduction to Programming",
+      "tips": [
+        "Practice coding daily — even 30 minutes helps build muscle memory.",
+        "Use the debugger rather than guessing at errors.",
+        "Break problems into small steps before writing any code."
+      ]
+    },
+    {
+      "code": "COS20007",
+      "name": "Object-Oriented Programming",
+      "tips": [
+        "Master encapsulation, inheritance, and polymorphism with real examples.",
+        "Draw UML diagrams before coding to clarify class relationships.",
+        "Write unit tests for each class as you build it."
+      ]
+    },
+    {
+      "code": "COS30008",
+      "name": "Data Structures and Patterns",
+      "tips": [
+        "Understand Big-O notation — it drives every design decision.",
+        "Implement each structure from scratch at least once to understand it deeply.",
+        "Study common design patterns like Iterator, Observer, and Strategy."
+      ]
+    },
+    {
+      "code": "COS30049",
+      "name": "Computing Technology Innovation Project",
+      "tips": [
+        "Start early and document your decisions throughout the project.",
+        "Use version control (Git) from day one and commit often.",
+        "Communicate with your team regularly and divide tasks clearly."
+      ]
+    },
+    {
+      "code": "COS40005",
+      "name": "Computing Project",
+      "tips": [
+        "Define a clear scope and stick to it — scope creep is the biggest risk.",
+        "Schedule regular check-ins with your supervisor.",
+        "Prepare your demo and report well in advance of the deadline."
+      ]
+    },
+    {
+      "code": "TNE10006",
+      "name": "Network Fundamentals",
+      "tips": [
+        "Understand the OSI and TCP/IP models thoroughly.",
+        "Use Packet Tracer to simulate networks and verify your understanding.",
+        "Practice subnetting problems until they feel automatic."
+      ]
+    }
+  ]
+}

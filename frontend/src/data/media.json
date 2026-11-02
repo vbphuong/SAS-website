@@ -1,0 +1,59 @@
+{
+  "faculty": "Media",
+  "units": [
+    {
+      "code": "MMD10001",
+      "name": "Introduction to Media",
+      "tips": [
+        "Consume a wide range of media — film, journalism, social media — and think critically.",
+        "Keep a media diary to track how media shapes your own perspective.",
+        "Write clearly and concisely; strong writing is the foundation of media work."
+      ]
+    },
+    {
+      "code": "JNL20002",
+      "name": "Journalism Practice",
+      "tips": [
+        "Always verify your sources — accuracy is non-negotiable in journalism.",
+        "Practice writing news stories under tight time constraints.",
+        "Study the inverted pyramid structure and apply it in every story."
+      ]
+    },
+    {
+      "code": "DIG20008",
+      "name": "Digital Content Creation",
+      "tips": [
+        "Experiment with different tools and formats to find your voice.",
+        "Analyse high-performing content and understand why it works.",
+        "Consistency and quality matter more than quantity of posts."
+      ]
+    },
+    {
+      "code": "FLM20005",
+      "name": "Film and Screen Studies",
+      "tips": [
+        "Watch films actively — pause, rewind, and analyse scenes closely.",
+        "Learn the core terminology: mise-en-scène, montage, and cinematography.",
+        "Compare different directors' styles to strengthen your critical analysis."
+      ]
+    },
+    {
+      "code": "PR30001",
+      "name": "Public Relations Strategy",
+      "tips": [
+        "Understand how to craft key messages tailored to different audiences.",
+        "Follow current PR campaigns and crisis communications in the news.",
+        "Practice writing press releases, pitches, and communication plans."
+      ]
+    },
+    {
+      "code": "ADV30003",
+      "name": "Advertising and Persuasion",
+      "tips": [
+        "Study classic and contemporary ad campaigns to understand persuasion techniques.",
+        "Learn the AIDA model (Attention, Interest, Desire, Action) deeply.",
+        "Practice creating briefs and concept pitches under tight constraints."
+      ]
+    }
+  ]
+}
