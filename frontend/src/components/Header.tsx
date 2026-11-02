@@ -16,7 +16,13 @@ export default function Header() {
     <header className="top-nav">
       <div className="nav-container">
         <div className="brand-wrap">
-          <span className="brand-mark" />
+          <Image
+            src="/signature_logo.png"
+            alt="Logo"
+            width={32}
+            height={32}
+            style={{ height: "32px", width: "auto", objectFit: "contain" }}
+          />
           <span className="brand-title">SAS</span>
           <Image
             src="/swinburne.webp"
