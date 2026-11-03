@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import UnitCard from "@/components/UnitCard";
+import FacultyUnitSearch from "@/components/FacultyUnitSearch";
 import csData from "@/data/computer-science.json";
 import businessData from "@/data/business.json";
 import mediaData from "@/data/media.json";
@@ -75,18 +75,14 @@ export default function FacultyPage({
         </div>
       </section>
 
-      {/* Unit cards */}
+      {/* Unit search & cards */}
       <section className="view-section" style={{ paddingTop: "48px" }}>
         {units.length === 0 ? (
           <p style={{ color: "var(--c-text-secondary)" }}>
             No units available for this faculty.
           </p>
         ) : (
-          <div className="units-grid">
-            {units.map((unit, i) => (
-              <UnitCard key={unit.code} unit={unit} index={i} />
-            ))}
-          </div>
+          <FacultyUnitSearch units={units} facultyLabel={meta.label} />
         )}
       </section>
     </main>

@@ -159,6 +159,127 @@ main { flex: 1; width: 100%; }
   max-width: 640px; margin-bottom: 48px; line-height: 1.7;
 }
 
+/* UNIT SEARCH BAR */
+.unit-search-section {
+  width: 100%;
+}
+.unit-search-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.unit-search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+}
+.unit-search-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--c-text-secondary);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+.unit-search-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 44px 0 46px;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--c-text-primary);
+  background: var(--c-surface);
+  border: 1.5px solid var(--c-border);
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.unit-search-input:focus {
+  border-color: var(--c-red);
+  box-shadow: 0 0 0 3px rgba(226, 1, 45, 0.12);
+}
+.unit-search-input::placeholder {
+  color: #9CA3AF;
+}
+.unit-search-clear {
+  position: absolute;
+  right: 12px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: var(--c-bg);
+  color: var(--c-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8125rem;
+  transition: background 0.15s, color 0.15s;
+}
+.unit-search-clear:hover {
+  background: var(--c-red-tint);
+  color: var(--c-red);
+}
+.unit-search-meta {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--c-text-secondary);
+}
+.unit-search-count strong {
+  color: var(--c-text-primary);
+}
+
+/* UNIT EMPTY STATE */
+.unit-empty-state {
+  background: var(--c-surface);
+  border: 1.5px dashed var(--c-border-strong);
+  border-radius: 4px;
+  padding: 56px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+.unit-empty-icon {
+  font-size: 2.25rem;
+  margin-bottom: 4px;
+}
+.unit-empty-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--c-black);
+}
+.unit-empty-desc {
+  font-size: 0.9375rem;
+  color: var(--c-text-secondary);
+  max-width: 440px;
+  line-height: 1.6;
+}
+.unit-empty-btn {
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--c-red);
+  background: var(--c-red-tint);
+  border: 1px solid rgba(226, 1, 45, 0.25);
+  padding: 8px 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.unit-empty-btn:hover {
+  background: var(--c-red);
+  color: #fff;
+}
+
 /* UNIT CARDS GRID */
 .units-grid {
   display: grid;
