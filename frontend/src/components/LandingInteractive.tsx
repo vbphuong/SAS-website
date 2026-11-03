@@ -198,7 +198,7 @@ export default function LandingInteractive() {
           <h1 className="landing-intro-title">
             {step === "celebrating"
               ? "🎉 Awesome! Get ready…"
-              : "Drag the 🎓 cap onto Mr. Success!"}
+              : <>Drag the 🎓 cap onto <span style={{ whiteSpace: "nowrap" }}>Mr. Success!</span></>}
           </h1>
           <p className="landing-intro-sub">
             {step === "celebrating"
