@@ -24,7 +24,7 @@ Backend runs on **http://localhost:8000**
 
 API endpoints:
 - `GET /api/faculties` — list all faculties
-- `GET /api/units/{faculty}` — get units for a faculty (e.g. `computer-science`, `business`, `media`)
+- `GET /api/units/{faculty}` — get units for a faculty (e.g. `computer-science`, `business`, `media`, `design`)
 
 ### Frontend (Next.js)
 
@@ -41,8 +41,9 @@ Frontend runs on **http://localhost:3000**
 ## Features
 
 - **Homepage** — hero with QR code booking, faculty cards, how-it-works section
-- **Faculty pages** — `/computer-science`, `/business`, `/media`
+- **Faculty pages** — `/computer-science`, `/business`, `/media`, `/design`
 - **Unit cards** — code badge, name, study tips, book-a-session link
+- **Search bar** — instant filter by unit code or unit name across all faculties
 - **Responsive** — mobile-first layout down to 320px
 - **Design** — Swinburne red (`#E2012D`), Barlow + Be Vietnam Pro + JetBrains Mono fonts
 
@@ -53,3 +54,4 @@ Frontend runs on **http://localhost:3000**
 | Computer Science | COS10009, COS20007, COS30008, COS30049, COS40005, TNE10006 |
 | Business | ACC10007, MGT10001, MKT10007, ECO10001, BUS30022, FIN30006 |
 | Media | MMD10001, JNL20002, DIG20008, FLM20005, PR30001, ADV30003 |
+| Design | DDD10001, DDD10006, DDD20013, DDD20004, DDD30018, DDD30022 |

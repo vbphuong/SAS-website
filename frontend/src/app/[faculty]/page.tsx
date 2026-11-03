@@ -4,11 +4,13 @@ import FacultyUnitSearch from "@/components/FacultyUnitSearch";
 import csData from "@/data/computer-science.json";
 import businessData from "@/data/business.json";
 import mediaData from "@/data/media.json";
+import designData from "@/data/design.json";
 
 const DATA: Record<string, { faculty: string; units: { code: string; name: string; tips: string[] }[] }> = {
   "computer-science": csData,
   business: businessData,
   media: mediaData,
+  design: designData,
 };
 
 const FACULTY_META: Record<string, { label: string; icon: string; desc: string }> = {
@@ -26,6 +28,11 @@ const FACULTY_META: Record<string, { label: string; icon: string; desc: string }
     label: "Media",
     icon: "🎬",
     desc: "Journalism, digital content, film, public relations, and advertising.",
+  },
+  design: {
+    label: "Design",
+    icon: "🎨",
+    desc: "UI/UX, visual communication, typography, branding, and design thinking.",
   },
 };
 

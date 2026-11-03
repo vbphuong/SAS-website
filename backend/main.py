@@ -29,4 +29,4 @@ def get_units(faculty: str):
 
 @app.get("/api/faculties")
 def get_faculties():
-    return {"faculties": ["computer-science", "business", "media"]}
+    return {"faculties": ["computer-science", "business", "media", "design"]}

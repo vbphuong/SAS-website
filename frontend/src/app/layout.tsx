@@ -1,27 +1,38 @@
 import type { Metadata, Viewport } from "next";
-import { Barlow, Be_Vietnam_Pro, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "./globals.css";
 
-const barlow = Barlow({
-  subsets: ["latin", "vietnamese"],
-  weight: ["700", "800"],
-  variable: "--font-barlow",
-  display: "swap",
-});
-
-const beVietnamPro = Be_Vietnam_Pro({
-  subsets: ["latin", "vietnamese"],
-  weight: ["400", "500", "600"],
-  variable: "--font-be-vietnam-pro",
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["500", "600"],
-  variable: "--font-jetbrains-mono",
+const simplonNorm = localFont({
+  src: [
+    {
+      path: "../../public/SimplonNorm-Regular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/SimplonNorm-Medium.otf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/SimplonNorm-Medium.otf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/SimplonNorm-Medium.otf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../../public/SimplonNorm-Medium.otf",
+      weight: "800",
+      style: "normal",
+    },
+  ],
+  variable: "--font-simplon",
   display: "swap",
 });
 
@@ -36,10 +47,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${barlow.variable} ${beVietnamPro.variable} ${jetbrainsMono.variable}`}
-    >
+    <html lang="en" className={simplonNorm.variable}>
       <body>
         <Header />
         {children}

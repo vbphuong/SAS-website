@@ -9,6 +9,7 @@ const navItems = [
   { href: "/computer-science", label: "CS" },
   { href: "/business", label: "Business" },
   { href: "/media", label: "Media" },
+  { href: "/design", label: "Design" },
 ];
 
 export default function Header() {
@@ -28,25 +29,28 @@ export default function Header() {
     <>
       <header className="top-nav">
         <div className="nav-container">
-          {/* Brand */}
-          <div className="brand-wrap">
+          {/* Brand Logos */}
+          <Link href="/" className="brand-wrap" aria-label="Swinburne Academic Success Home">
             <Image
               src="/signature_logo.png"
-              alt="Logo"
-              width={32}
-              height={32}
-              style={{ height: "32px", width: "auto", objectFit: "contain" }}
+              alt="Swinburne Academic Success"
+              className="brand-logo-sas"
+              width={1678}
+              height={637}
+              priority
+              unoptimized
             />
-            <span className="brand-title">SAS</span>
+            <span className="brand-divider" aria-hidden="true" />
             <Image
               src="/swinburne.webp"
-              alt="Swinburne"
-              className="brand-logo"
-              width={120}
-              height={30}
-              style={{ height: "30px", width: "auto" }}
+              alt="Swinburne University of Technology"
+              className="brand-logo-swinburne"
+              width={876}
+              height={640}
+              priority
+              unoptimized
             />
-          </div>
+          </Link>
 
           {/* Desktop nav */}
           <nav className="desktop-nav">

@@ -25,6 +25,10 @@ const FACULTIES = [
     slug: "media", label: "Media", icon: "🎬",
     desc: "Journalism, digital content, film studies, PR, and advertising tips.",
   },
+  {
+    slug: "design", label: "Design", icon: "🎨",
+    desc: "UI/UX, visual communication, typography, branding, and design thinking tips.",
+  },
 ];
 
 const CONFETTI_COLORS = [
@@ -135,7 +139,7 @@ export default function LandingInteractive() {
           <p className="eyebrow">Explore by Faculty</p>
           <h2 className="section-headline">What can we help you with?</h2>
           <p className="section-lead">
-            Browse tips for your units across three faculties. Each card shows you
+            Browse tips for your units across our faculties. Each card shows you
             practical strategies to succeed — and links you back to book a session.
           </p>
 

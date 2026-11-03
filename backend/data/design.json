@@ -1,0 +1,59 @@
+{
+  "faculty": "Design",
+  "units": [
+    {
+      "code": "DDD10001",
+      "name": "Design Methods",
+      "tips": [
+        "Iterate through multiple sketches before committing to a final digital concept.",
+        "Always anchor your design decisions in user research, personas, and problem briefs.",
+        "Document your design journey thoroughly — process books are critical for high marks."
+      ]
+    },
+    {
+      "code": "DDD10006",
+      "name": "Design Thinking and Innovation",
+      "tips": [
+        "Apply the Double Diamond framework: Discover, Define, Develop, and Deliver.",
+        "Conduct empathy interviews to discover latent, unstated user needs.",
+        "Test low-fidelity prototypes early with real users to validate key assumptions."
+      ]
+    },
+    {
+      "code": "DDD20013",
+      "name": "Typography and Visual Communication",
+      "tips": [
+        "Master the fundamentals of hierarchy, kerning, leading, and baseline grids.",
+        "Limit each project to two harmonious, complementary typefaces for clean readability.",
+        "Check color contrast ratios to ensure visual accessibility across all devices."
+      ]
+    },
+    {
+      "code": "DDD20004",
+      "name": "Branding and Identity Design",
+      "tips": [
+        "Design flexible visual identity systems that scale from app icons to billboards.",
+        "Test logo marks in single-color monochrome before introducing brand colors.",
+        "Compile comprehensive brand guidelines outlining logo usage, colors, and tone."
+      ]
+    },
+    {
+      "code": "DDD30018",
+      "name": "UX/UI and Interaction Design",
+      "tips": [
+        "Follow WCAG accessibility standards for font sizes, contrast, and touch targets.",
+        "Build interactive Figma prototypes to communicate user flows and micro-interactions.",
+        "Prioritise intuitive usability and user feedback over purely decorative visual flair."
+      ]
+    },
+    {
+      "code": "DDD30022",
+      "name": "Motion Design and Animation",
+      "tips": [
+        "Study the 12 principles of animation to make transitions and easing feel organic.",
+        "Storyboard motion sequences on paper before jumping into After Effects.",
+        "Keep file assets neatly organised with clear naming conventions for smooth rendering."
+      ]
+    }
+  ]
+}
