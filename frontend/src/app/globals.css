@@ -487,47 +487,108 @@ footer {
 /* ── Drag area ── */
 .landing-drag-area {
   display: flex; align-items: center; justify-content: center;
-  gap: 80px; flex-wrap: wrap;
+  gap: clamp(40px, 8vw, 84px); flex-wrap: wrap;
   animation: page-in .7s .15s ease both;
 }
 
 /* Graduation cap */
 .landing-cap {
-  user-select: none; touch-action: none; position: relative; z-index: 10;
-  filter: drop-shadow(0 8px 20px rgba(0,0,0,.4));
+  user-select: none; touch-action: none; position: relative; z-index: 20;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  filter: drop-shadow(0 10px 24px rgba(0,0,0,.5));
   will-change: transform;
+  cursor: grab;
+  transition: filter 0.2s ease;
 }
-.landing-cap.floating  { animation: lnd-float 2.8s ease-in-out infinite; }
-.landing-cap.dragging  { filter: drop-shadow(0 16px 32px rgba(226,1,45,.5)); }
+.landing-cap.floating  { animation: lnd-float 3s ease-in-out infinite; }
+.landing-cap.dragging  {
+  filter: drop-shadow(0 20px 36px rgba(226,1,45,.6)) scale(1.06);
+  cursor: grabbing;
+  z-index: 50;
+}
 @keyframes lnd-float {
-  0%, 100% { transform: translateY(0)    rotate(-6deg); }
-  50%       { transform: translateY(-14px) rotate(6deg); }
+  0%, 100% { transform: translateY(0)    rotate(-5deg); }
+  50%       { transform: translateY(-14px) rotate(5deg); }
+}
+
+.landing-cap-svg {
+  display: block;
+  width: 120px;
+  height: auto;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+  transition: transform 0.15s ease;
+}
+
+.landing-cap-pill {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: linear-gradient(135deg, #E2012D 0%, #A6001E 100%);
+  padding: 4px 12px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 14px rgba(226,1,45,.4);
+  pointer-events: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  animation: lnd-pulse 2s ease-in-out infinite;
 }
 
 /* Mr. Success wrapper */
 .landing-character {
   position: relative;
-  display: inline-flex; flex-direction: column; align-items: center; gap: 10px;
+  display: inline-flex; flex-direction: column; align-items: center; gap: 14px;
 }
 
-/* Drop zone — invisible circle over his head */
+.landing-mr-success {
+  display: block;
+  width: 200px;
+  height: auto;
+  max-width: 100%;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.45));
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.landing-character:hover .landing-mr-success {
+  transform: translateY(-2px);
+}
+
+/* Drop zone — target ring over Mr. Success's head */
 .landing-dropzone {
   position: absolute;
-  top: 16px; left: 50%; transform: translateX(-50%);
-  width: 80px; height: 80px; border-radius: 50%;
-  border: 2px dashed rgba(226,1,45,.4);
-  transition: all .2s ease;
+  top: 6px; left: 50%; transform: translateX(-50%);
+  width: 110px; height: 95px; border-radius: 50%;
+  border: 2px dashed rgba(226, 1, 45, 0.4);
+  background: rgba(226, 1, 45, 0.04);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   pointer-events: none;
+  z-index: 5;
 }
 .landing-dropzone.active {
   border-color: #E2012D;
-  background: rgba(226,1,45,.12);
-  box-shadow: 0 0 24px rgba(226,1,45,.35), inset 0 0 14px rgba(226,1,45,.1);
+  background: rgba(226, 1, 45, 0.2);
+  box-shadow: 0 0 32px rgba(226, 1, 45, 0.6), inset 0 0 16px rgba(226, 1, 45, 0.25);
+  transform: translateX(-50%) scale(1.1);
 }
 
 .landing-character-label {
-  font-family: var(--font-mono); font-size: .75rem; font-weight: 600;
-  color: var(--c-red); text-transform: uppercase; letter-spacing: .1em;
+  font-family: var(--font-mono); font-size: .8125rem; font-weight: 700;
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 4px 14px;
+  border-radius: 9999px;
+  text-transform: uppercase; letter-spacing: .12em;
+  display: inline-flex; align-items: center; gap: 6px;
+  backdrop-filter: blur(4px);
+}
+.landing-character-label::before {
+  content: "";
+  width: 6px; height: 6px; border-radius: 50%;
+  background-color: var(--c-red);
+  box-shadow: 0 0 8px var(--c-red);
 }
 
 /* Hint text */
@@ -547,6 +608,23 @@ footer {
 @keyframes lnd-bounce {
   0%, 100% { transform: translateY(0);   }
   50%       { transform: translateY(-5px); }
+}
+
+@media (max-width: 640px) {
+  .landing-drag-area {
+    gap: 36px;
+  }
+  .landing-mr-success {
+    width: 165px;
+  }
+  .landing-cap-svg {
+    width: 100px;
+  }
+  .landing-dropzone {
+    width: 95px;
+    height: 82px;
+    top: 4px;
+  }
 }
 
 /* ── Mini hero (content phase) ── */
