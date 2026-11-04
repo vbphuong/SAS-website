@@ -1,33 +1,67 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import Image from "next/image";
+import csData from "@/data/computer-science.json";
+import businessData from "@/data/business.json";
+import mediaData from "@/data/media.json";
+import designData from "@/data/design.json";
 
 /* ─── Types ─────────────────────────────────────────────── */
 type Step = "intro" | "celebrating" | "content";
 
 type Particle = {
-  id: number; x: number; color: string;
-  size: number; delay: number; circle: boolean;
+  id: number;
+  x: number;
+  color: string;
+  size: number;
+  delay: number;
+  circle: boolean;
 };
 
+interface Unit {
+  code: string;
+  name: string;
+  tips: string[];
+}
+
+interface Faculty {
+  id: string;
+  label: string;
+  icon: string;
+  desc: string;
+  units: Unit[];
+}
+
 /* ─── Data ───────────────────────────────────────────────── */
-const FACULTIES = [
+const FACULTIES: Faculty[] = [
   {
-    slug: "computer-science", label: "Computer Science", icon: "💻",
-    desc: "Programming, networks, data structures, and software engineering tips.",
+    id: "computer-science",
+    label: "Computer Science",
+    icon: "💻",
+    desc: "Programming, networks, data structures, and software engineering.",
+    units: csData.units,
   },
   {
-    slug: "business", label: "Business", icon: "📊",
-    desc: "Accounting, management, marketing, economics, and strategic finance tips.",
+    id: "business",
+    label: "Business",
+    icon: "📊",
+    desc: "Accounting, management, marketing, economics, and strategic finance.",
+    units: businessData.units,
   },
   {
-    slug: "media", label: "Media", icon: "🎬",
-    desc: "Journalism, digital content, film studies, PR, and advertising tips.",
+    id: "media",
+    label: "Media",
+    icon: "🎬",
+    desc: "Journalism, digital content, film studies, PR, and advertising.",
+    units: mediaData.units,
   },
   {
-    slug: "design", label: "Design", icon: "🎨",
-    desc: "UI/UX, visual communication, typography, branding, and design thinking tips.",
+    id: "design",
+    label: "Design",
+    icon: "🎨",
+    desc: "UI/UX, visual communication, typography, branding, and design thinking.",
+    units: designData.units,
   },
 ];
 
@@ -35,11 +69,8 @@ const CONFETTI_COLORS = [
   "#E2012D", "#FFD700", "#00B4D8", "#06D6A0", "#FFB347", "#C77DFF",
 ];
 
-const HOW_IT_WORKS = [
-  { n: "01", title: "Find your unit",  body: "Browse your faculty page and locate your unit code." },
-  { n: "02", title: "Read the tips",   body: "Each unit card has practical, actionable study strategies." },
-  { n: "03", title: "Book a session",  body: "Scan the QR code or click the link on any unit card to book." },
-];
+const BOOKING_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSdj7tAIRpOakIeZEFTqETQWEAN5w0_nU39I3jyXA2n4WajrVw/viewform";
 
 /* ══════════════════════════════════════════════════════════
    COMPONENT
@@ -51,8 +82,61 @@ export default function LandingInteractive() {
   const [isOverDrop, setIsOverDrop] = useState(false);
   const [confetti, setConfetti]   = useState<Particle[]>([]);
 
+  // Post-drag interaction states
+  const [selectedFacultyId, setSelectedFacultyId] = useState<string>("computer-science");
+  const [selectedUnitCode, setSelectedUnitCode]   = useState<string>("");
+  const [unitSearch, setUnitSearch]               = useState<string>("");
+  const [isModalOpen, setIsModalOpen]             = useState(false);
+
   const dropZoneRef = useRef<HTMLDivElement>(null);
   const dragStart   = useRef({ x: 0, y: 0, ox: 0, oy: 0 });
+
+  // Current faculty & units
+  const currentFaculty = useMemo(() => {
+    return FACULTIES.find((f) => f.id === selectedFacultyId) ?? FACULTIES[0];
+  }, [selectedFacultyId]);
+
+  // Sort units alphabetically by code (e.g. COS10009 -> COS20007)
+  const sortedUnits = useMemo(() => {
+    return [...currentFaculty.units].sort((a, b) => a.code.localeCompare(b.code));
+  }, [currentFaculty]);
+
+  // Filtered units based on quick search
+  const filteredUnits = useMemo(() => {
+    const q = unitSearch.trim().toLowerCase();
+    if (!q) return sortedUnits;
+    const qCompact = q.replace(/\s+/g, "");
+    return sortedUnits.filter(
+      (u) =>
+        u.code.toLowerCase().includes(q) ||
+        u.code.toLowerCase().replace(/\s+/g, "").includes(qCompact) ||
+        u.name.toLowerCase().includes(q)
+    );
+  }, [sortedUnits, unitSearch]);
+
+  // Currently selected unit
+  const selectedUnit = useMemo(() => {
+    return currentFaculty.units.find((u) => u.code === selectedUnitCode) ?? null;
+  }, [currentFaculty, selectedUnitCode]);
+
+  // Keyboard escape & scroll lock for modal popup
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setIsModalOpen(false);
+      }
+    }
+    if (isModalOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [isModalOpen]);
 
   /* ── Drag handlers ─────────────────────────────────────── */
   function onPointerDown(e: React.PointerEvent<HTMLDivElement>) {
@@ -108,65 +192,289 @@ export default function LandingInteractive() {
     setTimeout(() => { setStep("content"); setConfetti([]); }, 2200);
   }
 
-  /* ── CONTENT STATE — original homepage layout ──────────── */
+  function handleSelectFaculty(facultyId: string) {
+    setSelectedFacultyId(facultyId);
+    setSelectedUnitCode("");
+    setUnitSearch("");
+  }
+
+  function handleSelectUnit(unit: Unit) {
+    if (selectedUnitCode === unit.code) {
+      // Clicking the already selected unit immediately opens the tips popup
+      setIsModalOpen(true);
+    } else {
+      setSelectedUnitCode(unit.code);
+    }
+  }
+
+  /* ── CONTENT STATE — Post drag-cap interactive flow ─────── */
   if (step === "content") {
     return (
       <main>
-        {/* Hero with QR */}
-        <section className="hero-banner">
-          <div className="hero-inner">
-            <div>
-              <p className="hero-eyebrow">Swinburne University of Technology</p>
-              <h1 className="hero-headline">Student Academic&nbsp;Success</h1>
-              <p className="hero-sub">
-                We help you thrive at university. Find expert tips for your units,
-                then book a free one-on-one session with an academic advisor.
-              </p>
-            </div>
-            <div className="hero-qr-wrap">
-              <Image
-                src="/QR_book.png"
-                alt="Scan to book a session"
-                width={180} height={180} priority
-              />
-              <p className="hero-qr-label">Scan to book</p>
-            </div>
+        {/* Mini Hero Header */}
+        <section className="landing-mini-hero">
+          <div style={{ maxWidth: "var(--max-w)", margin: "0 auto" }}>
+            <p className="hero-eyebrow">Student Academic Success</p>
+            <h1 className="hero-headline" style={{ fontSize: "clamp(2rem, 5vw, 3.25rem)" }}>
+              🎓 Congratulations! Study Tips Unlocked
+            </h1>
+            <p className="hero-sub" style={{ maxWidth: "680px" }}>
+              Select your faculty and unit to explore expert study tips from SAS academic advisors. Scroll down to scan the QR code and book a 1-on-1 session.
+            </p>
           </div>
         </section>
 
-        {/* Faculty cards + How it works */}
-        <section className="view-section">
-          <p className="eyebrow">Explore by Faculty</p>
-          <h2 className="section-headline">What can we help you with?</h2>
-          <p className="section-lead">
-            Browse tips for your units across our faculties. Each card shows you
-            practical strategies to succeed — and links you back to book a session.
+        {/* Interactive Faculty & Unit Selector */}
+        <section className="landing-content">
+          {/* Step 1: Select Faculty */}
+          <div style={{ marginBottom: "40px" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px", flexWrap: "wrap", gap: "10px" }}>
+              <div>
+                <p className="eyebrow" style={{ marginBottom: "4px" }}>Step 1</p>
+                <h2 className="section-headline" style={{ fontSize: "clamp(1.35rem, 3vw, 1.875rem)", margin: 0 }}>
+                  Select Faculty
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setStep("intro");
+                  setCapOffset({ x: 0, y: 0 });
+                  setIsOverDrop(false);
+                }}
+                style={{
+                  background: "transparent",
+                  border: "1px solid var(--c-border)",
+                  borderRadius: "4px",
+                  padding: "6px 14px",
+                  fontFamily: "var(--font-display)",
+                  fontSize: "0.8125rem",
+                  color: "var(--c-text-secondary)",
+                  cursor: "pointer",
+                }}
+              >
+                🔄 Replay with Mr. Success
+              </button>
+            </div>
+
+            <div className="landing-faculty-tabs" role="tablist" aria-label="Select Faculty">
+              {FACULTIES.map((f) => {
+                const isActive = f.id === selectedFacultyId;
+                return (
+                  <button
+                    key={f.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    className={`landing-faculty-btn${isActive ? " active" : ""}`}
+                    onClick={() => handleSelectFaculty(f.id)}
+                  >
+                    <span style={{ marginRight: "8px" }}>{f.icon}</span>
+                    {f.label} ({f.units.length})
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Step 2: Select Unit */}
+          <div style={{ marginBottom: "40px" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px", flexWrap: "wrap", gap: "12px" }}>
+              <div>
+                <p className="eyebrow" style={{ marginBottom: "4px" }}>Step 2</p>
+                <h2 className="section-headline" style={{ fontSize: "clamp(1.35rem, 3vw, 1.875rem)", margin: 0 }}>
+                  Select Unit ({currentFaculty.label})
+                </h2>
+              </div>
+
+              {/* Quick filter search */}
+              <div style={{ position: "relative", minWidth: "260px" }}>
+                <input
+                  type="text"
+                  placeholder="Search by unit code or name..."
+                  value={unitSearch}
+                  onChange={(e) => setUnitSearch(e.target.value)}
+                  className="landing-filter-input"
+                  aria-label={`Search units in ${currentFaculty.label}`}
+                />
+                {unitSearch && (
+                  <button
+                    type="button"
+                    onClick={() => setUnitSearch("")}
+                    style={{
+                      position: "absolute",
+                      right: "12px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      background: "none",
+                      border: "none",
+                      color: "var(--c-text-secondary)",
+                      cursor: "pointer",
+                      fontSize: "0.875rem",
+                    }}
+                    aria-label="Clear search"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <p style={{ color: "var(--c-text-secondary)", fontSize: "0.9375rem", marginBottom: "20px" }}>
+              Click a unit to select it, then click <strong>View Tips</strong> to open the study guide.
+            </p>
+
+            {filteredUnits.length === 0 ? (
+              <div style={{ padding: "36px", textAlign: "center", background: "var(--c-surface)", borderRadius: "4px", border: "1px dashed var(--c-border)" }}>
+                <p style={{ color: "var(--c-text-secondary)", margin: 0 }}>
+                  No units found matching &quot;{unitSearch}&quot;.
+                </p>
+              </div>
+            ) : (
+              <div className="landing-unit-grid">
+                {filteredUnits.map((u) => {
+                  const isSelected = selectedUnitCode === u.code;
+                  return (
+                    <button
+                      key={u.code}
+                      type="button"
+                      className={`landing-unit-btn${isSelected ? " selected" : ""}`}
+                      onClick={() => handleSelectUnit(u)}
+                    >
+                      <div className="landing-unit-header">
+                        <span className="landing-unit-code">{u.code}</span>
+                        <span className={`landing-unit-check${isSelected ? " checked" : ""}`}>
+                          {isSelected ? "✓" : ""}
+                        </span>
+                      </div>
+                      <span className="landing-unit-name">{u.name}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Step 3: View Tips CTA */}
+          <div className="landing-actions-bar">
+            <button
+              type="button"
+              className="landing-view-btn"
+              disabled={!selectedUnit}
+              onClick={() => {
+                if (selectedUnit) setIsModalOpen(true);
+              }}
+            >
+              <span>💡</span>
+              {selectedUnit ? `View Tips for ${selectedUnit.code}` : "Select a unit to view tips"} →
+            </button>
+            {selectedUnit && (
+              <span style={{ fontSize: "0.9375rem", color: "var(--c-text-secondary)" }}>
+                Selected: <strong style={{ color: "var(--c-black)" }}>{selectedUnit.code}</strong> — {selectedUnit.name}
+              </span>
+            )}
+          </div>
+        </section>
+
+        {/* Modal Popup: Study tips dialog */}
+        {isModalOpen && selectedUnit && (
+          <div
+            className="landing-modal-bd"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setIsModalOpen(false);
+            }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-unit-title"
+          >
+            <div className="landing-modal">
+              <div className="landing-modal-head">
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
+                    <span className="unit-badge">{selectedUnit.code}</span>
+                    <span style={{ fontSize: "0.8125rem", color: "var(--c-text-secondary)" }}>
+                      {currentFaculty.icon} {currentFaculty.label}
+                    </span>
+                  </div>
+                  <h3 id="modal-unit-title" className="landing-unit-name" style={{ fontSize: "1.25rem" }}>
+                    {selectedUnit.name}
+                  </h3>
+                </div>
+                <button
+                  type="button"
+                  className="landing-modal-close"
+                  onClick={() => setIsModalOpen(false)}
+                  aria-label="Close tips dialog"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div>
+                <p style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
+                  fontSize: "0.875rem",
+                  letterSpacing: "0.04em",
+                  textTransform: "uppercase",
+                  color: "var(--c-red)",
+                  marginBottom: "16px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                }}>
+                  <span>💡</span> Study tips for this unit:
+                </p>
+
+                <ul className="landing-modal-tips">
+                  {selectedUnit.tips.map((tip, idx) => (
+                    <li key={idx} className="landing-modal-tip">
+                      <span className="landing-tip-num">{idx + 1}</span>
+                      <span className="landing-tip-text">{tip}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div style={{ marginTop: "32px", paddingTop: "20px", borderTop: "1px solid var(--c-border)" }}>
+                <a
+                  href={BOOKING_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="landing-modal-book-btn"
+                >
+                  📅 Book a 1-on-1 session for this unit →
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Bottom Booking Section: QR & Booking Link */}
+        <section className="landing-qr">
+          <p className="hero-eyebrow" style={{ color: "var(--c-red)" }}>Student Academic Success</p>
+          <h2 className="landing-qr-title">Book a 1-on-1 Academic Session</h2>
+          <p className="landing-qr-sub">
+            Need an academic advisor to answer your questions or boost your study strategy? Scan the QR code or click the button below to register.
           </p>
-
-          <div className="info-grid">
-            {FACULTIES.map((f) => (
-              <div key={f.slug} className="info-card">
-                <div className="info-card-icon">{f.icon}</div>
-                <h3 className="info-card-title">{f.label}</h3>
-                <p className="info-card-body">{f.desc}</p>
-                <a href={`/${f.slug}`} className="info-card-link">View units →</a>
-              </div>
-            ))}
+          <div className="landing-qr-box">
+            <Image
+              src="/QR_book.png"
+              alt="QR code to register for a SAS academic session"
+              width={200}
+              height={200}
+              priority
+            />
+            <p className="landing-qr-label">Scan with your phone to book</p>
           </div>
-
-          <p className="eyebrow" style={{ marginTop: "64px" }}>How it works</p>
-          <h2 className="section-headline" style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)" }}>
-            Three steps to succeed
-          </h2>
-          <div className="info-grid">
-            {HOW_IT_WORKS.map((s) => (
-              <div key={s.n} className="info-card">
-                <span className="unit-code" style={{ fontSize: "1rem" }}>{s.n}</span>
-                <h3 className="info-card-title">{s.title}</h3>
-                <p className="info-card-body">{s.body}</p>
-              </div>
-            ))}
-          </div>
+          <a
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="landing-qr-link"
+          >
+            👉 Open SAS Booking Form →
+          </a>
         </section>
       </main>
     );

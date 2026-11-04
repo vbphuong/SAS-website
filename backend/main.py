@@ -11,7 +11,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "https://*.vercel.app",   # Vercel preview URLs
-        # thêm custom domain của bạn ở đây nếu có
+        # add your custom domain here if applicable
     ],
     allow_methods=["*"],
     allow_headers=["*"],
